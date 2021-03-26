@@ -7,5 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-User.create name: "Daniel", email:"daniel@devdehumanas.com", kind: :admin
+User.create name: "Daniel", email:"daniel@devdehumanas.com", kind: :admin, password: "302010"
 Category.create name: "Ruby"
