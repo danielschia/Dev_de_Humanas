@@ -7,15 +7,25 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     before_action :authenticate_admin
+    before_action :authenticate_user!
+    include Pundit
 
-    def authenticate_admin
-      # TODO Add authentication logic here.
-    end
+    after_action :verify_authorized, except: :index, unless: :skip_pundit?
+    after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
 
     # Override this value to specify the number of elements to display at a time
     # on index pages. Defaults to 20.
     # def records_per_page
     #   params[:per_page] || 20
     # end
+    def authenticate_admin
+      # TODO Add authentication logic here.
+    end
+
+    private
+
+    def skip_pundit?
+      devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
+    end
   end
 end
